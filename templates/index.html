@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visor de Capturas</title>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #222;
+        }
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+    </style>
+</head>
+<body>
+    <img id="screenshot" src="/screenshots/screenshot.png" alt="Captura de pantalla" />
+    <script>
+        const imgElement = document.getElementById("screenshot");
+
+        // Función para comprobar si hay una nueva imagen
+        async function checkForNewImage() {
+            try {
+                const response = await fetch("/screenshots");
+                const data = await response.json();
+                if (data.new_image) {
+                    // Actualiza la imagen con el timestamp para evitar caché
+                    imgElement.src = "/screenshots/" + data.new_image + "?t=" + new Date().getTime();
+                }
+            } catch (error) {
+                console.error("Error al verificar la nueva imagen:", error);
+            }
+        }
+
+        // Comprobar cada segundo si hay una nueva imagen
+        setInterval(checkForNewImage, 1000);
+    </script>
+</body>
+</html>
