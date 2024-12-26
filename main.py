@@ -1,21 +1,22 @@
 import os
 import time
-from PIL import Image, ImageChops
+from PIL import Image, ImageChops, ImageDraw
 from PIL import ImageGrab
+import pyautogui
 from flask import Flask, send_from_directory, render_template, jsonify
 
 # Parámetros
-SAVE_DIR = "screenshots"
+SAVE_DIR = "lastState"
 ASPECT_RATIO = (10, 9)  # Relación de aspecto 10:9
-WIDTH = 900  # Ancho de la imagen
+WIDTH = 1200  # Ancho de la imagen
 OUTPUT_SIZE = (WIDTH * ASPECT_RATIO[0] // ASPECT_RATIO[1], WIDTH)  # Redimensionar según la relación de aspecto
-FPS = 1  # Captura a 0.5 FPS
+FPS = 1  # Captura a 1 FPS
 
 # Crear el directorio de captura si no existe
 os.makedirs(SAVE_DIR, exist_ok=True)
 
 # Nombre fijo para la imagen
-IMAGE_NAME = "screenshot.png"
+IMAGE_NAME = "State.png"
 
 # Variable para almacenar la última imagen capturada
 last_screenshot = None
@@ -38,6 +39,22 @@ def capture_screenshots():
 
         cropped = screenshot.crop((left, top, right, bottom))
         resized = cropped.resize(OUTPUT_SIZE, Image.Resampling.LANCZOS)
+
+        # Obtener la posición del ratón
+        mouse_x, mouse_y = pyautogui.position()
+
+        # Calcular las coordenadas escaladas para la imagen redimensionada
+        scale_x = OUTPUT_SIZE[0] / width
+        scale_y = OUTPUT_SIZE[1] / height
+        scaled_mouse_x = int(mouse_x * scale_x)
+        scaled_mouse_y = int(mouse_y * scale_y)
+
+        # Dibujar el cursor en la imagen redimensionada
+        draw = ImageDraw.Draw(resized)
+        cursor_radius = 10  # Tamaño del cursor
+        cursor_color = (255, 0, 0)  # Color rojo
+        draw.ellipse((scaled_mouse_x - cursor_radius, scaled_mouse_y - cursor_radius,
+                      scaled_mouse_x + cursor_radius, scaled_mouse_y + cursor_radius), fill=cursor_color)
 
         # Si es la primera captura, guarda la imagen sin comparación
         if last_screenshot is None:
