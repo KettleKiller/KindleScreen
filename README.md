@@ -28,7 +28,3 @@ KindleScreen is a Python application that captures screenshots at a specified fr
 - `FPS`: Frame rate for capturing screenshots.
 - `X_PARTS`: Number of parts in the X direction.
 - `Y_PARTS`: Number of parts in the Y direction.
-
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
