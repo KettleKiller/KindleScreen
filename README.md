@@ -10,25 +10,6 @@ KindleScreen is a Python application that captures screenshots at a specified fr
 - Provides a web interface to view the screenshots.
 - Sends real-time updates to the web interface when parts of the screenshots are updated.
 
-## Installation
-
-1. Clone the repository:
-    ```bash
-    git clone https://github.com/KettleKiller/KindleScreen.git
-    cd KindleScreen
-    ```
-
-2. Create a virtual environment and activate it:
-    ```bash
-    python -m venv venv
-    source venv/bin/activate  # On Windows use `venv\Scripts\activate`
-    ```
-
-3. Install the required dependencies:
-    ```bash
-    pip install -r requirements.txt
-    ```
-
 ## Usage
 
 1. Run the application:
