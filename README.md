@@ -14,7 +14,7 @@ KindleScreen is a Python application that captures screenshots at a specified fr
 
 1. Run the application:
     ```bash
-    python app.py
+    python main.py
     ```
 
 2. Open a web browser and navigate to `http://localhost:5000` to view the web interface.
